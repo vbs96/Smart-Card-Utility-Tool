@@ -1,12 +1,18 @@
-
 #include<winscard.h>
-#include<iostream>
-using namespace std;
-
+#include"Conection.h"
 int main() {
 
+	try {
+		CConection::EstablishContext();
 
-	printf("AM FACUT O MODIFICAREEEE\N");
+		auto containerReaderi = CConection::ListCardReaders();
+
+
+
+	}
+	catch (CConectionExeption *exep) {
+		exep->DispatchException();
+	}
 
 	return 0;
 }
