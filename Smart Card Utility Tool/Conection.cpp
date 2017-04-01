@@ -1,30 +1,41 @@
 #include "Conection.h"
-#include <winscard.h>
 #include <iostream>
 //#include <vector>
 //#include <string>
 
 //
+//
 // Exception clases
-class BadEstablishContext :public CConectionExeption {
+class BadEstablishContext :public ExceptieConnect {
 public:
-	void DispatchException();
+	void Dispatch() const;
 };
-class BadReaderList :public CConectionExeption {
+class BadReaderList :public ExceptieConnect {
 	LONG returnValue;
 public:
 	BadReaderList(LONG value) :returnValue{ value } {}
-	void DispatchException();
+	void Dispatch()const;
 };
-class BadMemoryDealloc :public CConectionExeption {
+class BadMemoryDealloc :public ExceptieConnect {
 public:
-	void DispatchException();
+	void Dispatch()const;
+};
+class BadConnection :public ExceptieConnect {
+	LONG controlValue;
+	public:
+		BadConnection(LONG _x) :controlValue{ _x } {}
+		~BadConnection() {}
+		void Dispatch()const;
+};
+class BadDecconect :public ExceptieConnect {
+	public:
+		void Dispatch()const;
 };
 
-void BadEstablishContext::DispatchException() {
+void BadEstablishContext::Dispatch()const {
 	std::cout << "Nu s-a facut cum trebuie establish conexion." << std::endl;
 }
-void BadReaderList::DispatchException() {
+void BadReaderList::Dispatch()const {
 	if (returnValue == SCARD_E_NO_READERS_AVAILABLE) {
 		std::cout << "Nu s-a detectat nici un cititor de carduri." << std::endl;
 		//cel mai probabil un exit(1) sau ceva...
@@ -34,9 +45,20 @@ void BadReaderList::DispatchException() {
 		//iarasi un exit sau ceva de genul asta...
 	}
 }
-void BadMemoryDealloc::DispatchException() {
+void BadMemoryDealloc::Dispatch()const {
 	std::cout << "Nu s-a putut dezaloca memorie undeva." << std::endl;
 }
+void BadConnection::Dispatch()const{
+	if (controlValue == SCARD_E_NOT_READY)
+		std::cout << "Readerul nu s-a putut connecta la smart card." << std::endl;
+	else
+		std::cout << "Eroare necunoscuta la incercarea de connectare la smart card." << std::endl;
+}
+void BadDecconect::Dispatch()const {
+	std::cout << "Nu s-a deconectat corespunzator smart cardul." << std::endl;
+}
+
+//
 //
 //
 
@@ -45,19 +67,19 @@ typedef std::vector<std::string> containerType;
 //
 //
 // Implementation
-CConection::pimpl* CConection::impl;
-CConection* CConection::body;
-struct CConection::pimpl{
+
+Connect::pimpl*	Connect::impl;
+Connect*			Connect::body;
+struct Connect::pimpl{
 
 	SCARDCONTEXT handleContext;
 	
 	void _implEstablishContext(SCARDCONTEXT&);
 	containerType _implListCardReaders();
+	void _implConnectSCard(const std::string&, DWORD&, SCARDHANDLE&);
 };
 
-void CConection::pimpl::_implEstablishContext(SCARDCONTEXT& x) {
-
-
+void Connect::pimpl::_implEstablishContext(SCARDCONTEXT& x) {
 	
 	LONG returnValue;
 	SCARDCONTEXT localHandleContext = NULL;
@@ -73,7 +95,7 @@ void CConection::pimpl::_implEstablishContext(SCARDCONTEXT& x) {
 	GetInstance()->impl->handleContext = localHandleContext;
 }
 
-containerType CConection::pimpl::_implListCardReaders() {
+containerType Connect::pimpl::_implListCardReaders() {
 
 	containerType toReturn;
 	LONG controlValue;
@@ -103,25 +125,40 @@ containerType CConection::pimpl::_implListCardReaders() {
 	}
 }
 
+void Connect::pimpl::_implConnectSCard(const std::string& nume, DWORD& prot, SCARDHANDLE& sch) {
+
+	LONG controlValue;
+
+	controlValue = SCardConnect(handleContext,
+		(LPCTSTR)nume.c_str(),
+		SCARD_SHARE_EXCLUSIVE,
+		SCARD_PROTOCOL_T0 | SCARD_PROTOCOL_T1,
+		&sch,
+		&prot);
+
+	if (controlValue != SCARD_S_SUCCESS)
+		throw new BadConnection{ controlValue };
+}
+
 //
 //
 //
 
-CConection::CConection()
+Connect::Connect()
 {
 	impl = new pimpl{};
 }
 
 
-CConection::~CConection()
+Connect::~Connect()
 {
 	delete impl;
 }
 
-CConection* CConection::GetInstance() {
+Connect* Connect::GetInstance() {
 
 	if (body == nullptr)
-		body = new CConection{};
+		body = new Connect{};
 	return body;
 }
 
@@ -130,11 +167,35 @@ CConection* CConection::GetInstance() {
 //
 // User interface
 
-void CConection::EstablishContext(){
+void Connect::EstablishContext(){
 	impl->_implEstablishContext(impl->handleContext);
 }
 
-containerType CConection::ListCardReaders() {
+containerType Connect::ListCardReaders() {
 	return impl->_implListCardReaders();
 }
 
+void Connect::Conectare(const std::string& _numeReader, DWORD& _protocolActiv,SCARDHANDLE& _sch) {
+	 impl->_implConnectSCard(_numeReader, _protocolActiv, _sch);
+}
+
+void Connect::ClearContext() {
+	SCardReleaseContext(impl->handleContext);
+}
+
+void Connect::Deconectare(const SCARDHANDLE& sch) {
+	LONG controlValue = SCardDisconnect(sch, SCARD_LEAVE_CARD);
+	//oricum e by default chestia de mai sus
+	//eventual daca vreau sa o modific ulterior
+	if (controlValue != SCARD_S_SUCCESS)
+		throw	BadDecconect{};
+}
+
+//SA NU UIT SA STERG CHESTIA ASTA
+SCARDCONTEXT&	Connect::GetContext(){
+	return impl->handleContext;
+}
+
+//
+//
+//

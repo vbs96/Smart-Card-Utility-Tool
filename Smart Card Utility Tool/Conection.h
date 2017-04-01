@@ -1,26 +1,28 @@
 #pragma once
 #include<vector>
-
-class CConectionExeption{
+#include<winscard.h>
+class ExceptieConnect{
 	public:
-		virtual void DispatchException() = 0;
+		virtual void Dispatch() const = 0;
 };
 
-class CConection
+class Connect
 {
 	struct pimpl;
 	static pimpl* impl;
 
-	CConection();
-	~CConection();
-	static CConection* body;
-	static CConection* GetInstance();
+	Connect();
+	~Connect();
+	static Connect* body;
+	static Connect* GetInstance();
 public:
-	
-	
 
-	//static bool Conectare();
-	static void EstablishContext();
-	static std::vector<std::string> ListCardReaders();
+	static SCARDCONTEXT&	GetContext();
+
+	static void						EstablishContext();
+	static std::vector<std::string> ListCardReaders	();
+	static void						Conectare		(const std::string&, DWORD&, SCARDHANDLE&);
+	static void						ClearContext	();
+	static void						Deconectare		(const SCARDHANDLE&);
 };
 
