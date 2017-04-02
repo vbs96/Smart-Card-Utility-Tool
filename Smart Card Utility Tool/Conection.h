@@ -1,6 +1,7 @@
 #pragma once
 #include<vector>
 #include<winscard.h>
+
 class ExceptieConnect{
 	public:
 		virtual void Dispatch() const = 0;
