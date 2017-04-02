@@ -1,5 +1,6 @@
 
 #include <windows.h>
+#include<WinUser.h>
 #include "CWinApp.h"
 #include "CMainWindow.h"
 #include"resource.h"
@@ -7,7 +8,6 @@
 //---------------------------------------------------------------------------
 LRESULT CALLBACK MainWndProc(HWND hWnd, UINT Msg,
 	WPARAM wParam, LPARAM lParam);
-LRESULT CALLBACK DlgProc(HWND hWndDlg, UINT Msg, WPARAM wParam, LPARAM lParam);
 //---------------------------------------------------------------------------
 INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst,
 	LPSTR lpCmdLine, int nCmdShow)
@@ -39,30 +39,32 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst,
 	return 0;
 }
 //---------------------------------------------------------------------------
-LRESULT CALLBACK DlgProc(HWND hWndDlg, UINT Msg, WPARAM wParam, LPARAM lParam)
+INT_PTR CALLBACK CreateDlgProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam)
 {
-	switch (Msg)
+	switch (Message)
 	{
 	case WM_INITDIALOG:
 		return TRUE;
-
 	case WM_COMMAND:
-		switch (wParam)
+		switch (LOWORD(wParam))
 		{
 		case IDOK:
-			EndDialog(hWndDlg, 0);
-			return TRUE;
+		{
 		}
 		break;
+		case IDCANCEL:
+			EndDialog(hwnd, IDCANCEL);
+			break;
+		}
+	default:
+		return FALSE;
 	}
-
-	return FALSE;
 }
-
 LRESULT CALLBACK MainWndProc(HWND hWnd, UINT Msg,
 	WPARAM wParam, LPARAM lParam)
 {
 	HMENU hSysMenu;
+	HWND hListBox, hDlg;
 	switch (Msg)
 	{
 	case WM_CREATE:
@@ -76,7 +78,9 @@ LRESULT CALLBACK MainWndProc(HWND hWnd, UINT Msg,
 		{
 		case ID_MENU_SELECTCARD:
 		{
-			MessageBox(hWnd, L"fml", L"FML", 0);
+			DialogBox(GetModuleHandle(NULL), MAKEINTRESOURCE(IDD_DIALOG1), hWnd, CreateDlgProc);
+
+	
 		}
 			break;
 		case ID_MENU_INSTALLAPPLET:
