@@ -47,10 +47,10 @@
     <ClInclude Include="Conection.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Instruction.h">
-      <Filter>Resource Files</Filter>
-    </ClInclude>
     <ClInclude Include="UserInteraction.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Instruction.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
