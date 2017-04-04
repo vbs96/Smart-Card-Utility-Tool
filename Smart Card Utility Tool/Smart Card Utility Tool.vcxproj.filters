@@ -16,33 +16,51 @@
     <Filter Include="Header Files\resources">
       <UniqueIdentifier>{9c43728d-c41d-4a39-b395-2b7a6d6d83d1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Win32API">
+      <UniqueIdentifier>{4621028d-9a35-4c31-801f-5ca27f30151c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Backend">
+      <UniqueIdentifier>{65e31ad5-b113-416e-ada4-0365c6b0a7af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Win32API">
+      <UniqueIdentifier>{20908bf2-64fe-4e7b-a3b8-3267f1400667}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Backend">
+      <UniqueIdentifier>{5d8bee7f-f398-4bbe-9b66-2e47972401c1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CWControl.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="CMainWindow.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Win32API</Filter>
     </ClCompile>
     <ClCompile Include="CWinApp.cpp">
+      <Filter>Source Files\Win32API</Filter>
+    </ClCompile>
+    <ClCompile Include="Conection.cpp">
+      <Filter>Source Files\Backend</Filter>
+    </ClCompile>
+    <ClCompile Include="UserInterface.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CWControl.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CMainWindow.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CWinApp.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>Header Files\resources</Filter>
+    </ClInclude>
+    <ClInclude Include="CMainWindow.h">
+      <Filter>Header Files\Win32API</Filter>
+    </ClInclude>
+    <ClInclude Include="CWinApp.h">
+      <Filter>Header Files\Win32API</Filter>
+    </ClInclude>
+    <ClInclude Include="Conection.h">
+      <Filter>Header Files\Backend</Filter>
+    </ClInclude>
+    <ClInclude Include="UserInterface.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

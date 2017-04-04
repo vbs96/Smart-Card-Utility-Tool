@@ -5,7 +5,7 @@
 class CWindow
 {
 public:
-	// We will use a default constructor to declare a window
+	//  default constructor to declare a window
 	CWindow();
 	// The Create() method wil be used to initialize a window
 	HWND Create(HINSTANCE hinst,
