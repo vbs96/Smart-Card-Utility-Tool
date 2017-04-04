@@ -13,9 +13,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Header Files\resources">
-      <UniqueIdentifier>{9c43728d-c41d-4a39-b395-2b7a6d6d83d1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Win32API">
       <UniqueIdentifier>{4621028d-9a35-4c31-801f-5ca27f30151c}</UniqueIdentifier>
     </Filter>
@@ -47,9 +44,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="resource.h">
-      <Filter>Header Files\resources</Filter>
-    </ClInclude>
     <ClInclude Include="CMainWindow.h">
       <Filter>Header Files\Win32API</Filter>
     </ClInclude>
@@ -61,6 +55,9 @@
     </ClInclude>
     <ClInclude Include="UserInterface.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Resource Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

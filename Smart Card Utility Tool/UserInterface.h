@@ -5,5 +5,5 @@
 
 namespace UI {
 	LRESULT CALLBACK MainWndProc(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam);
-	LRESULT CALLBACK DlgProc(HWND hWndDlg, UINT Msg, WPARAM wParam, LPARAM lParam);
+	INT_PTR CALLBACK CreateDlgProc(HWND hWndDlg, UINT Msg, WPARAM wParam, LPARAM lParam);
 }
