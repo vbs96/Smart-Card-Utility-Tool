@@ -75,6 +75,9 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
     </ClCompile>
+    <Link>
+      <AdditionalDependencies>winscard.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -111,9 +114,21 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="CMainWindow.cpp" />
+    <ClCompile Include="Conection.cpp" />
     <ClCompile Include="CWControl.cpp" />
     <ClCompile Include="CWinApp.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="UserInterface.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CMainWindow.h" />
+    <ClInclude Include="Conection.h" />
+    <ClInclude Include="CWinApp.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="UserInterface.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Smart Card Utility Tool.rc" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CMainWindow.h" />
