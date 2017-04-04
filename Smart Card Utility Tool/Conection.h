@@ -8,7 +8,7 @@ class ExceptieConnect{
 
 class Connect
 {
-	struct pimpl;
+	struct pimpl;  //private implementation
 	static pimpl* impl;
 
 	Connect();
@@ -16,8 +16,6 @@ class Connect
 	static Connect* body;
 	static Connect* GetInstance();
 public:
-
-	static SCARDCONTEXT&	GetContext();
 
 	static void						EstablishContext();
 	static std::vector<std::string> ListCardReaders	();

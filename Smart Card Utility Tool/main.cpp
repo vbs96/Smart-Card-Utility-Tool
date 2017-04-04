@@ -1,9 +1,9 @@
 
 #include <windows.h>
-#include<WinUser.h>
 #include "CWinApp.h"
 #include "CMainWindow.h"
 #include"resource.h"
+#include"Conection.h"
 
 //---------------------------------------------------------------------------
 LRESULT CALLBACK MainWndProc(HWND hWnd, UINT Msg,
@@ -13,8 +13,8 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst,
 	LPSTR lpCmdLine, int nCmdShow)
 {
 	MSG   Msg;
-	LPCTSTR ClsName = L"Win32OOP";
-	LPCTSTR WndName = L"Java Card Utility Tool";
+	LPCTSTR ClsName = "Win32OOP";
+	LPCTSTR WndName = "Java Card Utility Tool";
 	//LPCTSTR Wnd2Name = L"Choose Card";
 
 	// Initialize the application class
@@ -44,7 +44,15 @@ INT_PTR CALLBACK CreateDlgProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lP
 	switch (Message)
 	{
 	case WM_INITDIALOG:
-		return TRUE;
+		{
+			auto container = Connect::ListCardReaders();
+			SendMessage(GetDlgItem(hwnd, IDC_LIST1), LB_ADDSTRING, 0, (LPARAM)"blablabla");
+		for (const auto &it : container)
+		{
+			//SendMessage(GetDlgItem(hwnd, IDC_LIST1), LB_ADDSTRING, 0, (LPARAM)it.c_str());
+		}
+	return TRUE;
+	}
 	case WM_COMMAND:
 		switch (LOWORD(wParam))
 		{
@@ -78,8 +86,11 @@ LRESULT CALLBACK MainWndProc(HWND hWnd, UINT Msg,
 		{
 		case ID_MENU_SELECTCARD:
 		{
+			
 			DialogBox(GetModuleHandle(NULL), MAKEINTRESOURCE(IDD_DIALOG1), hWnd, CreateDlgProc);
+			
 
+			
 	
 		}
 			break;

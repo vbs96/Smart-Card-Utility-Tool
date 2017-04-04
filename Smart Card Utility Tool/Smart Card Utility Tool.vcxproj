@@ -41,7 +41,7 @@
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -82,6 +82,9 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
     </ClCompile>
+    <Link>
+      <AdditionalDependencies>winscard.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -111,15 +114,19 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="CMainWindow.cpp" />
+    <ClCompile Include="Conection.cpp" />
     <ClCompile Include="CWControl.cpp" />
     <ClCompile Include="CWinApp.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CMainWindow.h" />
+    <ClInclude Include="Conection.h" />
     <ClInclude Include="CWControl.h" />
     <ClInclude Include="CWinApp.h" />
+    <ClInclude Include="Instruction.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="UserInteraction.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Smart Card Utility Tool.rc" />
