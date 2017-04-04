@@ -115,6 +115,7 @@
   <ItemGroup>
     <ClCompile Include="CMainWindow.cpp" />
     <ClCompile Include="Conection.cpp" />
+    <ClCompile Include="CWControl.cpp" />
     <ClCompile Include="CWinApp.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="UserInterface.cpp" />
@@ -125,6 +126,15 @@
     <ClInclude Include="CWinApp.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="UserInterface.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Smart Card Utility Tool.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CMainWindow.h" />
+    <ClInclude Include="CWControl.h" />
+    <ClInclude Include="CWinApp.h" />
+    <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Smart Card Utility Tool.rc" />
