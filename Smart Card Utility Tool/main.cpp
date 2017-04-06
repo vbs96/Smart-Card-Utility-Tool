@@ -45,12 +45,12 @@ INT_PTR CALLBACK CreateDlgProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lP
 	{
 	case WM_INITDIALOG:
 		{
-			auto container = Connect::ListCardReaders();
-			SendMessage(GetDlgItem(hwnd, IDC_LIST1), LB_ADDSTRING, 0, (LPARAM)"blablabla");
-		for (const auto &it : container)
-		{
-			//SendMessage(GetDlgItem(hwnd, IDC_LIST1), LB_ADDSTRING, 0, (LPARAM)it.c_str());
-		}
+			//auto container = Connect::ListCardReaders();
+			//SendMessage(GetDlgItem(hwnd, IDC_LIST1), LB_ADDSTRING, 0, (LPARAM)"blablabla");
+	//	for (const auto &it : container)
+		//{
+			///SendMessage(GetDlgItem(hwnd, IDC_LIST1), LB_ADDSTRING, 0, (LPARAM)it.c_str());
+		//}
 	return TRUE;
 	}
 	case WM_COMMAND:

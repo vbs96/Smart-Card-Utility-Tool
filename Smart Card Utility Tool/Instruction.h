@@ -2,11 +2,15 @@
 #include<winscard.h>
 #include<vector>
 
-template<class Byte>
-class CInstruction
+class Instruction
 {
-	std::vector<BYTE> standardInstruction;
+	BYTE* standardInstruction;
+	int len;
+
 public:
-	Instruction(const BYTE* _stan)
+	Instruction(const BYTE* _stdInstruction,int _len);
+	LPCBYTE Append(const BYTE* toAdd,int len);
+	BYTE* GetInstr() { return standardInstruction; }
+	~Instruction();
 
 };

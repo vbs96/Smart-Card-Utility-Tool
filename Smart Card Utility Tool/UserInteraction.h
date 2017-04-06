@@ -2,12 +2,16 @@
 #include<winscard.h>
 #include"Instruction.h"
 
+class InteractionErr
+{
+	public:
+		virtual void Dispatch() const = 0;
+};
+
 class CUserInteraction
 {
-public:
-	template<class BYTE>
-	void SendAPDU(CInstruction<BYTE>, char*AID_applet)
-	{
 
-	}
+public:
+	static void SendAPDU(Instruction& _instrName, const BYTE* appletAID);
+
 };
