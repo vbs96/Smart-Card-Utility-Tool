@@ -1,5 +1,5 @@
 #include"Instruction.h"
-
+#include <windows.h>
 Instruction::Instruction(const BYTE* _stdInstruction,int _len)
 {
 	BYTE i = 0;
