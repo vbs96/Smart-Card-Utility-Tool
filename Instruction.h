@@ -1,16 +1,15 @@
 #pragma once
-#include<winscard.h>
-#include<vector>
+
 
 class Instruction
 {
-	BYTE* standardInstruction;
+	unsigned char* standardInstruction;
 	int len;
 
 public:
-	Instruction(const BYTE* _stdInstruction,int _len);
-	LPCBYTE Append(const BYTE* toAdd,int len);
-	BYTE* GetInstr() { return standardInstruction; }
+	Instruction(const unsigned char* stdInstruction,int len);
+	LPCBYTE Append(const unsigned char* toAdd,int len);
+	unsigned char* GetInstr() { return standardInstruction; }
 	~Instruction();
 
 };
