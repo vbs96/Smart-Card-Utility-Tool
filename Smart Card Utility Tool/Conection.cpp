@@ -191,6 +191,11 @@ void Connect::Deconectare(const SCARDHANDLE& sch) {
 		throw	BadDecconect{};
 }
 
+//SA NU UIT SA STERG CHESTIA ASTA
+SCARDCONTEXT&	Connect::GetContext(){
+	return impl->handleContext;
+}
+
 //
 //
 //

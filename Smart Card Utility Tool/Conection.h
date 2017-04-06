@@ -1,6 +1,7 @@
 #pragma once
 #include<vector>
 #include<winscard.h>
+
 class ExceptieConnect{
 	public:
 		virtual void Dispatch() const = 0;
@@ -8,7 +9,7 @@ class ExceptieConnect{
 
 class Connect
 {
-	struct pimpl;  //private implementation
+	struct pimpl;
 	static pimpl* impl;
 
 	Connect();
@@ -16,6 +17,8 @@ class Connect
 	static Connect* body;
 	static Connect* GetInstance();
 public:
+
+	static SCARDCONTEXT&	GetContext();
 
 	static void						EstablishContext();
 	static std::vector<std::string> ListCardReaders	();
