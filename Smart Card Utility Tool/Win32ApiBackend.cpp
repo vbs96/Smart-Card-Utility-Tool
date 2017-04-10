@@ -1,4 +1,4 @@
-#include"Interface.h"
+#include"ApiInterface.h"
 
 LRESULT CALLBACK UI::DlgProc(HWND hWndDlg, UINT Msg, WPARAM wParam, LPARAM lParam)
 {
