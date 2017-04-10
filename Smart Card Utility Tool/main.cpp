@@ -1,5 +1,5 @@
-
 #include"UserInterface.h"
+#include"CMainWindow.h"
 
 INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nCmdShow)
 {
@@ -7,8 +7,7 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, in
 	LPCTSTR ClsName = "Win32OOP";
 	LPCTSTR WndName = "Java Card Utility Tool";
 
-	// Initialize the application class
-	CWApplication WinApp(hInstance, ClsName, UI::MainWndProc,0);
+	CWApplication WinApp(hInstance, ClsName, UI::MainWndProc, 0);
 	WinApp.Register();
 
 	CWindow Wnd;
