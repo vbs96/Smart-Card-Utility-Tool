@@ -1,5 +1,4 @@
 #pragma once
-#include<winscard.h>
 #include"Instruction.h"
 
 class InteractionErr
@@ -12,6 +11,6 @@ class CUserInteraction
 {
 
 public:
-	static void SendAPDU(Instruction& _instrName, const BYTE* appletAID);
+	static void SendAPDU(Instruction& instrName, const unsigned char* appletAID);
 
 };
