@@ -5,7 +5,7 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, in
 {
 	MSG   Msg;
 	LPCTSTR ClsName = "Win32OOP";
-	LPCTSTR WndName = "Java Card Utility Tool";
+	LPCTSTR WndName ="Java Card Utility Tool";
 
 	CWApplication WinApp(hInstance, ClsName, UI::MainWndProc, 0);
 	WinApp.Register();
