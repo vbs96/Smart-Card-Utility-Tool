@@ -1,14 +1,10 @@
 
 #include <windows.h>
-#include "CWinApp.h"
+#include "ApiInterface.h"
 #include "CMainWindow.h"
 #include"resource.h"
 #include"Conection.h"
-
-//---------------------------------------------------------------------------
-LRESULT CALLBACK MainWndProc(HWND hWnd, UINT Msg,
-	WPARAM wParam, LPARAM lParam);
-//---------------------------------------------------------------------------
+//------------------------------------------
 INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst,
 	LPSTR lpCmdLine, int nCmdShow)
 {
@@ -18,7 +14,7 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst,
 	//LPCTSTR Wnd2Name = L"Choose Card";
 
 	// Initialize the application class
-	CWApplication WinApp(hInstance, ClsName, MainWndProc,0);
+	CWApplication WinApp(hInstance, ClsName, UI::MainWndProc,0);
 	WinApp.Register();
 
 	// Create the main window
