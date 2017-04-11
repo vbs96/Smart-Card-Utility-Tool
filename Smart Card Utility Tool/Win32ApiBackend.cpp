@@ -1,34 +1,46 @@
-#include"Interface.h"
+#include"ApiInterface.h"
+#include"Conection.h"
 
 LRESULT CALLBACK UI::DlgProc(HWND hWndDlg, UINT Msg, WPARAM wParam, LPARAM lParam)
 {
 	switch (Msg)
 	{
 	case WM_INITDIALOG:
+	{
+		auto container = Connect::ListCardReaders();
+		//SendMessage(GetDlgItem(hwnd, IDC_LIST1), LB_ADDSTRING, 0, (LPARAM)"blablabla");
+			for (const auto &it : container)
+		{
+		  SendMessage(GetDlgItem(hWndDlg, IDC_LIST1), LB_ADDSTRING, 0, (LPARAM)it.c_str());
+		}
 		return TRUE;
-
+	}
 	case WM_COMMAND:
-		switch (wParam)
+		switch (LOWORD(wParam))
 		{
 		case IDOK:
-			EndDialog(hWndDlg, 0);
-			return TRUE;
+		{
 		}
 		break;
+		case IDCANCEL:
+			EndDialog(hWndDlg, IDCANCEL);
+			break;
+		}
+	default:
+		return FALSE;
 	}
-
-	return FALSE;
 }
-
-LRESULT CALLBACK UI::MainWndProc(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK MainWndProc(HWND hWnd, UINT Msg,
+	WPARAM wParam, LPARAM lParam)
 {
 	HMENU hSysMenu;
+	HWND hListBox, hDlg;
 	switch (Msg)
 	{
 	case WM_CREATE:
 		hSysMenu = GetSystemMenu(hWnd, FALSE);
 		RemoveMenu(hSysMenu, 2, MF_BYPOSITION);
-
+		Connect::EstablishContext();
 
 		return 0;
 	case WM_COMMAND:
@@ -36,7 +48,12 @@ LRESULT CALLBACK UI::MainWndProc(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lPar
 		{
 		case ID_MENU_SELECTCARD:
 		{
-			MessageBox(hWnd, "fml", "FML", 0);
+
+			DialogBox(GetModuleHandle(NULL), MAKEINTRESOURCE(IDD_DIALOG1), hWnd, UI::DlgProc);
+
+
+
+
 		}
 		break;
 		case ID_MENU_INSTALLAPPLET:
@@ -54,3 +71,6 @@ LRESULT CALLBACK UI::MainWndProc(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lPar
 
 	return DefWindowProc(hWnd, Msg, wParam, lParam);
 }
+
+
+//-----------------------------------------------------------------------

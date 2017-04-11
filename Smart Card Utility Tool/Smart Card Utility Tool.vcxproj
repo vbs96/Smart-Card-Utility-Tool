@@ -115,16 +115,16 @@
   <ItemGroup>
     <ClCompile Include="CMainWindow.cpp" />
     <ClCompile Include="Conection.cpp" />
-    <ClCompile Include="CWControl.cpp" />
     <ClCompile Include="CWinApp.cpp" />
     <ClCompile Include="Instruction.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="UserInteraction.cpp" />
+    <ClCompile Include="Win32ApiBackend.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ApiInterface.h" />
     <ClInclude Include="CMainWindow.h" />
     <ClInclude Include="Conection.h" />
-    <ClInclude Include="CWControl.h" />
     <ClInclude Include="CWinApp.h" />
     <ClInclude Include="Instruction.h" />
     <ClInclude Include="resource.h" />

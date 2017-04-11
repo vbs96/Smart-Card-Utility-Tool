@@ -11,7 +11,7 @@ Instruction::Instruction(const BYTE* _stdInstruction,int _len)
 	}
 }
 
-LPCBYTE Instruction::Append(const BYTE* toAdd,int _len)
+unsigned char* Instruction::Append(const  unsigned char* toAdd,int _len)
 {
 	BYTE i = 0;
 	BYTE* result = new BYTE[len + _len];

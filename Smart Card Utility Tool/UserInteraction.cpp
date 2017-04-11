@@ -53,7 +53,7 @@ void BadSCardTransmit::Dispatch()const {
 		std::cout << " Unknown APDU sending error." << std::endl;
 	}
 }
-static void SendAPDU( Instruction& _instrName, const BYTE* appletAID)
+static void SendAPDU( Instruction& _instrName, const  unsigned char* appletAID)
 {
 
 	LONG result;

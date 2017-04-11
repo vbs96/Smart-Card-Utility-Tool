@@ -1,4 +1,5 @@
 #pragma once
+#include<winscard.h>
 class Instruction
 {
 	unsigned char* standardInstruction;
