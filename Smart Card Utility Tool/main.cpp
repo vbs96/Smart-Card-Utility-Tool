@@ -11,7 +11,6 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst,
 	MSG   Msg;
 	LPCTSTR ClsName = "Win32OOP";
 	LPCTSTR WndName = "Java Card Utility Tool";
-	//LPCTSTR Wnd2Name = L"Choose Card";
 
 	// Initialize the application class
 	CWApplication WinApp(hInstance, ClsName, UI::MainWndProc,0);
