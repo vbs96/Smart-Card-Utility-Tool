@@ -29,21 +29,16 @@ LRESULT CALLBACK UI::SubclassEditProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM
 	cf.dwEffects = CFE_BOLD;
 	lstrcpy(cf.szFaceName, "Arial");
 	*/
-
-
-	static int counter1=0;
+	SetFocus(hEdit);
 	auto lineCount = 0;
 	auto lineIndex = 0;
 	auto lineLenght = 0; 
-
-	int index = 0;
 	switch (msg)
 	{
 		
-
+	
 	case WM_KEYDOWN:
-
-		counter1++;
+		SendMessage(hEdit, EM_SETREADONLY, FALSE , 0);
 		lineCount = SendMessage(hEdit, EM_GETLINECOUNT, 0, 0);
 		lineIndex = SendMessage(hEdit, EM_LINEINDEX, lineCount - 1, 0);
 		lineLenght = SendMessage(hEdit, EM_LINELENGTH, lineIndex, 0);
@@ -51,23 +46,21 @@ LRESULT CALLBACK UI::SubclassEditProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM
 		{
 			AppendText(hEdit, ">>");
 		}
-
 		switch (wParam)
 		{
-			
+		case VK_PRIOR:
+			BlockInput(TRUE);
+		case VK_NEXT:
+			SetCaretPos(0, +1);
 		case VK_BACK:
 		{
-			counter1--;
-			
-			if (lineLenght == 1)
+			if (lineLenght == 2)
 			{
-				MessageBox(hEdit, "Testbun", NULL, MB_OK);
+				SendMessage(hEdit, EM_SETREADONLY, TRUE, NULL);
 			}
 		}
-			
 		case VK_RETURN:
 		{
-			counter1 = 0;
 			/*
 			SendMessage(hEdit, EM_SETSEL, lineIndex, lineIndex + lineLenght);
 			
@@ -77,11 +70,7 @@ LRESULT CALLBACK UI::SubclassEditProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM
 			SendMessage(hEdit, EM_GETLINE, lineCount - 1, (LPARAM)buffer);
 
 			buffer[lineLenght] = '\0';
-
-			//	MessageBox(hEdit, buffer, NULL, MB_OK); //test
-	
-			break;  //or return 0; if you don't want to pass it further to def proc
-					//If not your key, skip to default:
+			break;
 		}
 		}
 	default:	
@@ -130,7 +119,8 @@ LRESULT CALLBACK UI::MainWndProc(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lPar
 {
 
 	HMENU hSysMenu;
-	//HWND hEdit = NULL;
+	OPENFILENAME ofn;
+	char szFileName[MAX_PATH] = "";
 	RECT dim;
 	//DWORD contorLinie = 0;
 	switch (Msg) {
@@ -147,15 +137,15 @@ LRESULT CALLBACK UI::MainWndProc(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lPar
 			dim.left, dim.top, dim.right, dim.bottom, //dimensiuni initiale 
 			hWnd, NULL, GetModuleHandle(NULL), NULL);
 
-		//fontul textului 
-		HFONT hf;
+		////fontul textului 
+	/*	HFONT hf;
 		HDC hdc;
 		long lfHeight;
 		hdc = GetDC(NULL);
 		lfHeight = -MulDiv(13, GetDeviceCaps(hdc, LOGPIXELSY), 72);
 		ReleaseDC(NULL, hdc);
-		hf = CreateFont(lfHeight, 0, 0, 0, 0, TRUE, 0, 0, 0, 0, 0, 0, 0, "Italic");
-		SendMessage(hEdit, WM_SETFONT, (WPARAM)hf, TRUE);
+		hf = CreateFont(lfHeight, 0, 0, 0, 0, TRUE, 0, 0, 0, 0, 0, 0, 0, "Bold");
+		SendMessage(hEdit, WM_SETFONT, (WPARAM)hf, TRUE);*/
 
 		editWndProc = (WNDPROC)SetWindowLongPtr(hEdit, GWLP_WNDPROC, (LONG_PTR)SubclassEditProc);
 
@@ -166,7 +156,7 @@ LRESULT CALLBACK UI::MainWndProc(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lPar
 		MoveWindow(hEdit, dim.left, dim.top, abs(dim.right - dim.left), abs(dim.top - dim.bottom), TRUE);
 	}
 				  break;
-
+	
 	case WM_COMMAND:
 		switch (LOWORD(wParam)) {
 		case ID_MENU_SELECTCARD: {
@@ -175,6 +165,24 @@ LRESULT CALLBACK UI::MainWndProc(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lPar
 		}
 								 break;
 		case ID_MENU_INSTALLAPPLET:
+			
+			
+
+			ZeroMemory(&ofn, sizeof(ofn));
+
+			ofn.lStructSize = sizeof(ofn); // SEE NOTE BELOW
+			ofn.hwndOwner = hWnd;
+			ofn.lpstrFilter = "Text Files (*.txt)\0*.txt\0All Files (*.*)\0*.*\0";
+			ofn.lpstrFile = szFileName;
+			ofn.nMaxFile = MAX_PATH;
+			ofn.Flags = OFN_EXPLORER | OFN_FILEMUSTEXIST | OFN_HIDEREADONLY;
+			ofn.lpstrDefExt = "txt";
+
+			if (GetOpenFileName(&ofn))
+			{
+				// Do something usefull with the filename stored in szFileName 
+			}
+			//DialogBox(GetModuleHandle(NULL), MAKEINTRESOURCE(IDD_DIALOG1), hWnd, CreateDlgProc);
 
 			break;
 		case ID_MENU_KEYVAULT:
@@ -182,6 +190,20 @@ LRESULT CALLBACK UI::MainWndProc(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lPar
 			break;
 		}
 		break;
+	case WM_CTLCOLOREDIT:
+	{
+		HDC hdcStatic = (HDC)wParam;
+		SetTextColor(hdcStatic, RGB(255, 255, 255));
+		SetBkColor(hdcStatic, RGB(0, 0, 0));
+		return (INT_PTR)CreateSolidBrush(RGB(0, 0, 0));
+	}
+	case WM_CTLCOLORSTATIC:
+	{
+		HDC hdcStatic = (HDC)wParam;
+		SetTextColor(hdcStatic, RGB(255, 255, 255));
+		SetBkColor(hdcStatic, RGB(0, 0, 0));
+		return (INT_PTR)CreateSolidBrush(RGB(0, 0, 0));
+	}
 	case WM_DESTROY:
 		//aici va venii dezalocare context si alte dezalocari cred...
 		//Connect::ClearContext();
