@@ -13,18 +13,22 @@ int main() {
 		SCARDHANDLE cardHandler;
 		Connect::Conectare(containerReaderi[0], protocolActiv, cardHandler);
 	
-		
-		/*if (rv == SCARD_S_SUCCESS) {
-			std::cout << "Bravo boss" << std::endl;
-			SCardDisconnect(cardHandler, SCARD_LEAVE_CARD);
+		SCARD_IO_REQUEST pioSendPci;
+		switch (protocolActiv)
+		{
+		case SCARD_PROTOCOL_T0:
+			pioSendPci = *SCARD_PCI_T0;
+			break;
+
+		case SCARD_PROTOCOL_T1:
+			pioSendPci = *SCARD_PCI_T1;
+			break;
 		}
-		else if (rv == SCARD_E_NOT_READY)
-			std::cout << "Nu e gata?!" << std::endl;
-		else
-			std::cout << "Nush";*/
+		SCardTransmit(cardHandler,pioSendPci,)
 
 		
 		Connect::ClearContext();
+		Connect::Deconectare(cardHandler);
 		//Gemalto USB Smart Card Reader 0
 	
 
